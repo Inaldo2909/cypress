@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.0.1 (Python 3.12.4 on win32)" generated="2024-08-19T16:44:09.704834" rpa="false" schemaversion="5">
+<suite id="s1" name="Robot" source="E:\Automação\work-robot\robot">
+<suite id="s1-s1" name="Tests" source="E:\Automação\work-robot\robot\tests">
+<suite id="s1-s1-s1" name="Banco Dados" source="E:\Automação\work-robot\robot\tests\banco_dados">
+<suite id="s1-s1-s1-s1" name="testePostGres" source="E:\Automação\work-robot\robot\tests\banco_dados\testePostGres.robot">
+<test id="s1-s1-s1-s1-t1" name="Exemplo De Teste Com Banco De Dados" line="6">
+<kw name="Conexao Banco" owner="DataBasePostgresql">
+<kw name="Connect To Database" owner="DatabaseLibrary">
+<msg time="2024-08-19T16:44:09.754458" level="INFO">Connecting using : psycopg2.connect(database=postgres, user=postgres, password=***, host=localhost, port=5432)</msg>
+<msg time="2024-08-19T16:44:09.790100" level="INFO">${DB_CONNECTION} = None</msg>
+<var>${DB_CONNECTION}</var>
+<arg>psycopg2</arg>
+<arg>${DB_NAME}</arg>
+<arg>${DB_USER}</arg>
+<arg>${DB_PASS}</arg>
+<arg>${DB_HOST}</arg>
+<arg>${DB_PORT}</arg>
+<doc>Loads the DB API 2.0 module given ``dbapiModuleName`` then uses it to
+connect to the database using provided parameters such as ``dbName``, ``dbUsername``, and ``dbPassword``.</doc>
+<status status="PASS" start="2024-08-19T16:44:09.745945" elapsed="0.044155"/>
+</kw>
+<kw name="Set Global Variable" owner="BuiltIn">
+<msg time="2024-08-19T16:44:09.791101" level="INFO">${DB_CONNECTION} = None</msg>
+<arg>${DB_CONNECTION}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="PASS" start="2024-08-19T16:44:09.790100" elapsed="0.001001"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2024-08-19T16:44:09.791101" level="INFO">Conexão ao banco de dados estabelecida</msg>
+<arg>Conexão ao banco de dados estabelecida</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2024-08-19T16:44:09.791101" elapsed="0.000000"/>
+</kw>
+<doc>Conecta ao banco de dados PostgreSQL e armazena a conexão em uma variável global</doc>
+<status status="PASS" start="2024-08-19T16:44:09.744946" elapsed="0.047217"/>
+</kw>
+<kw name="Incluir Dados" owner="DataBasePostgresql">
+<kw name="Execute Sql String" owner="DatabaseLibrary">
+<msg time="2024-08-19T16:44:09.793164" level="INFO">Executing : Execute SQL String  |  INSERT INTO pessoa (id, nome, e_mail, senha, sexo, cpf) VALUES (nextval('public.pessoa_seq'), 'Arnaldo Silva', 'arnaldo@mail.com', '123', 'M', '11111111191')</msg>
+<arg>INSERT INTO pessoa (id, nome, e_mail, senha, sexo, cpf) VALUES (nextval('public.pessoa_seq'), '${nome}', '${email}', '${senha}', '${sexo}', '${cpf}')</arg>
+<doc>Executes the ``sqlString`` as a single SQL command.</doc>
+<status status="PASS" start="2024-08-19T16:44:09.792163" elapsed="0.002001"/>
+</kw>
+<arg>Arnaldo Silva</arg>
+<arg>arnaldo@mail.com</arg>
+<arg>123</arg>
+<arg>M</arg>
+<arg>11111111191</arg>
+<status status="PASS" start="2024-08-19T16:44:09.792163" elapsed="0.002001"/>
+</kw>
+<kw name="Executar SQL" owner="DataBasePostgresql">
+<kw name="Query" owner="DatabaseLibrary">
+<msg time="2024-08-19T16:44:09.795163" level="INFO">Executing : Query  |  SELECT * FROM PUBLIC.PESSOA </msg>
+<msg time="2024-08-19T16:44:09.795163" level="INFO">${result} = [(Decimal('5'), 'Arnaldo Silva', 'arnaldo@mail.com', '123', 'M', '11111111191')]</msg>
+<var>${result}</var>
+<arg>SELECT * FROM PUBLIC.PESSOA</arg>
+<doc>Runs a query with the ``selectStatement`` and returns the result as a list of rows.
+The type of row values depends on the database module -
+usually they are tuples or tuple-like objects.</doc>
+<status status="PASS" start="2024-08-19T16:44:09.795163" elapsed="0.001001"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-08-19T16:44:09.796164" level="INFO">${id} = 5</msg>
+<var>${id}</var>
+<arg>${result}[0][0]</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-08-19T16:44:09.796164" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${id}</value>
+<status status="PASS" start="2024-08-19T16:44:09.796164" elapsed="0.000000"/>
+</return>
+<msg time="2024-08-19T16:44:09.797163" level="INFO">${id} = 5</msg>
+<var>${id}</var>
+<status status="PASS" start="2024-08-19T16:44:09.794164" elapsed="0.002999"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2024-08-19T16:44:09.797163" level="INFO">5</msg>
+<arg>${id}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2024-08-19T16:44:09.797163" elapsed="0.000000"/>
+</kw>
+<kw name="Excluir Dados" owner="DataBasePostgresql">
+<kw name="Execute Sql String" owner="DatabaseLibrary">
+<msg time="2024-08-19T16:44:09.798166" level="INFO">Executing : Execute SQL String  |  DELETE FROM PUBLIC.PESSOA WHERE ID = 5</msg>
+<arg>DELETE FROM PUBLIC.PESSOA WHERE ID = ${id}</arg>
+<doc>Executes the ``sqlString`` as a single SQL command.</doc>
+<status status="PASS" start="2024-08-19T16:44:09.798166" elapsed="0.000996"/>
+</kw>
+<arg>${id}</arg>
+<status status="PASS" start="2024-08-19T16:44:09.798166" elapsed="0.000996"/>
+</kw>
+<kw name="Desconexao Banco" owner="DataBasePostgresql">
+<kw name="Disconnect From Database" owner="DatabaseLibrary">
+<msg time="2024-08-19T16:44:09.800164" level="INFO">Executing : Disconnect From Database</msg>
+<doc>Disconnects from the database.</doc>
+<status status="PASS" start="2024-08-19T16:44:09.799162" elapsed="0.001002"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2024-08-19T16:44:09.800164" level="INFO">Conexão ao banco de dados encerrada</msg>
+<arg>Conexão ao banco de dados encerrada</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2024-08-19T16:44:09.800164" elapsed="0.000000"/>
+</kw>
+<doc>Desconecta do banco de dados PostgreSQL</doc>
+<status status="PASS" start="2024-08-19T16:44:09.799162" elapsed="0.001002"/>
+</kw>
+<doc>Um exemplo de teste que utiliza a conexão com o banco de dados PostgreSQL</doc>
+<status status="PASS" start="2024-08-19T16:44:09.744946" elapsed="0.056218"/>
+</test>
+<status status="PASS" start="2024-08-19T16:44:09.723394" elapsed="0.078829"/>
+</suite>
+<status status="PASS" start="2024-08-19T16:44:09.722393" elapsed="0.080830"/>
+</suite>
+<status status="PASS" start="2024-08-19T16:44:09.720344" elapsed="0.083883"/>
+</suite>
+<status status="PASS" start="2024-08-19T16:44:09.707837" elapsed="0.097386"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" skip="0" id="s1" name="Robot">Robot</stat>
+<stat pass="1" fail="0" skip="0" id="s1-s1" name="Tests">Robot.Tests</stat>
+<stat pass="1" fail="0" skip="0" id="s1-s1-s1" name="Banco Dados">Robot.Tests.Banco Dados</stat>
+<stat pass="1" fail="0" skip="0" id="s1-s1-s1-s1" name="testePostGres">Robot.Tests.Banco Dados.testePostGres</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
